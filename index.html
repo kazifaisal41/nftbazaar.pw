@@ -1,857 +1,1177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NFTBazaar.pw — Premium Web3 Domain For Sale</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --gold: #f0a500;
-    --gold-light: #ffd060;
-    --gold-dim: #b07800;
-    --bg: #08090d;
-    --bg2: #0e1018;
-    --bg3: #14161f;
-    --surface: #1a1d29;
-    --border: rgba(240,165,0,0.18);
-    --text: #e8eaf0;
-    --text-dim: #7c8099;
-    --accent: #00e5ff;
-    --red: #ff4757;
-    --green: #2ed573;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    overflow-x: hidden;
-    min-height: 100vh;
-  }
-
-  /* === ANIMATED GRID BACKGROUND === */
-  .bg-grid {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background-image:
-      linear-gradient(rgba(240,165,0,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(240,165,0,0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
-  }
-
-  .bg-orb {
-    position: fixed;
-    border-radius: 50%;
-    filter: blur(120px);
-    pointer-events: none;
-    z-index: 0;
-    animation: drift 10s ease-in-out infinite alternate;
-  }
-  .orb1 { width: 500px; height: 500px; background: rgba(240,165,0,0.08); top: -100px; left: -100px; }
-  .orb2 { width: 400px; height: 400px; background: rgba(0,229,255,0.05); bottom: -80px; right: -80px; animation-delay: -5s; }
-  .orb3 { width: 300px; height: 300px; background: rgba(240,165,0,0.06); top: 40%; left: 50%; transform: translate(-50%,-50%); animation-delay: -2s; }
-
-  @keyframes drift {
-    from { transform: translate(0,0) scale(1); }
-    to   { transform: translate(30px,20px) scale(1.08); }
-  }
-
-  /* === LAYOUT === */
-  .wrapper {
-    position: relative;
-    z-index: 1;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-
-  /* === NAV === */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 18px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(8,9,13,0.75);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .nav-logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 1.1rem;
-    letter-spacing: 0.05em;
-  }
-  .nav-logo span { color: var(--gold); }
-
-  .nav-badge {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    padding: 5px 12px;
-    background: rgba(240,165,0,0.12);
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    color: var(--gold);
-    letter-spacing: 0.12em;
-    animation: pulse-badge 2.5s ease-in-out infinite;
-  }
-
-  @keyframes pulse-badge {
-    0%,100% { box-shadow: 0 0 0 0 rgba(240,165,0,0.25); }
-    50%      { box-shadow: 0 0 0 6px rgba(240,165,0,0); }
-  }
-
-  /* === HERO === */
-  .hero {
-    padding: 160px 0 80px;
-    text-align: center;
-  }
-
-  .hero-tag {
-    display: inline-block;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    color: var(--gold);
-    padding: 6px 16px;
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    background: rgba(240,165,0,0.07);
-    margin-bottom: 28px;
-    text-transform: uppercase;
-    animation: fadeUp 0.8s ease both;
-  }
-
-  .hero-domain {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(3rem, 9vw, 6.5rem);
-    line-height: 1;
-    letter-spacing: -0.02em;
-    animation: fadeUp 0.8s 0.1s ease both;
-    position: relative;
-    display: inline-block;
-  }
-
-  .hero-domain .nft  { color: var(--gold); }
-  .hero-domain .baz  { color: var(--text); }
-  .hero-domain .tld  {
-    color: var(--text-dim);
-    font-size: 0.55em;
-    vertical-align: top;
-    margin-top: 0.18em;
-    margin-left: 2px;
-  }
-
-  .hero-domain::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    border-radius: 2px;
-    animation: fadeUp 0.8s 0.3s ease both;
-  }
-
-  .hero-sub {
-    margin-top: 32px;
-    font-size: 1.1rem;
-    color: var(--text-dim);
-    max-width: 520px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.7;
-    animation: fadeUp 0.8s 0.2s ease both;
-  }
-
-  .hero-sub strong { color: var(--text); font-weight: 500; }
-
-  /* === PRICE CARD === */
-  .price-strip {
-    margin: 56px auto 0;
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-    animation: fadeUp 0.8s 0.35s ease both;
-  }
-
-  .price-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px 28px;
-    text-align: center;
-    min-width: 150px;
-    transition: border-color 0.3s, transform 0.3s;
-  }
-  .price-card:hover { border-color: var(--gold); transform: translateY(-3px); }
-  .price-card.featured {
-    border-color: var(--gold);
-    background: linear-gradient(135deg, rgba(240,165,0,0.1), rgba(240,165,0,0.03));
-    box-shadow: 0 0 40px rgba(240,165,0,0.1);
-  }
-
-  .pc-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-  .pc-price {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1.5rem;
-    color: var(--gold);
-  }
-  .pc-note {
-    font-size: 0.72rem;
-    color: var(--text-dim);
-    margin-top: 4px;
-  }
-
-  /* === SECTION === */
-  section { padding: 80px 0; }
-
-  .section-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.25em;
-    color: var(--gold);
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-
-  h2 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: clamp(1.8rem, 4vw, 2.5rem);
-    line-height: 1.15;
-    margin-bottom: 20px;
-  }
-
-  /* === FEATURE GRID === */
-  .feature-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 16px;
-    margin-top: 40px;
-  }
-
-  .feat-card {
-    background: var(--bg3);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 16px;
-    padding: 28px 24px;
-    transition: border-color 0.3s, transform 0.3s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .feat-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .feat-card:hover { border-color: rgba(240,165,0,0.3); transform: translateY(-4px); }
-  .feat-card:hover::before { opacity: 1; }
-
-  .feat-icon {
-    font-size: 1.8rem;
-    margin-bottom: 14px;
-    display: block;
-  }
-
-  .feat-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-    margin-bottom: 8px;
-    color: var(--text);
-  }
-
-  .feat-desc {
-    font-size: 0.85rem;
-    color: var(--text-dim);
-    line-height: 1.65;
-  }
-
-  /* === STATS ROW === */
-  .stats-row {
-    display: flex;
-    gap: 0;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    overflow: hidden;
-    margin-top: 60px;
-    flex-wrap: wrap;
-  }
-
-  .stat-item {
-    flex: 1;
-    min-width: 160px;
-    padding: 32px 24px;
-    text-align: center;
-    border-right: 1px solid var(--border);
-    position: relative;
-  }
-  .stat-item:last-child { border-right: none; }
-
-  .stat-num {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 2rem;
-    color: var(--gold);
-    display: block;
-  }
-  .stat-txt {
-    font-size: 0.78rem;
-    color: var(--text-dim);
-    margin-top: 4px;
-    letter-spacing: 0.04em;
-  }
-
-  /* === USE CASES === */
-  .use-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 40px;
-  }
-
-  .use-item {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 20px 24px;
-    background: var(--bg3);
-    border: 1px solid rgba(255,255,255,0.05);
-    border-radius: 12px;
-    transition: border-color 0.3s, background 0.3s;
-  }
-  .use-item:hover {
-    border-color: var(--border);
-    background: var(--surface);
-  }
-
-  .use-num {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--gold);
-    min-width: 28px;
-    font-weight: 700;
-  }
-
-  .use-text {
-    font-size: 0.92rem;
-    color: var(--text);
-  }
-  .use-text span { color: var(--text-dim); font-size: 0.82rem; display: block; margin-top: 2px; }
-
-  /* === DIVIDER === */
-  .divider {
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--border), transparent);
-    margin: 0;
-  }
-
-  /* === CTA SECTION === */
-  .cta-section {
-    padding: 100px 0;
-    text-align: center;
-    position: relative;
-  }
-
-  .cta-section::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 50%; transform: translateX(-50%);
-    width: 600px; height: 600px;
-    background: radial-gradient(ellipse, rgba(240,165,0,0.07) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .cta-section > * { position: relative; z-index: 1; }
-
-  .cta-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    line-height: 1.1;
-    margin-bottom: 12px;
-  }
-  .cta-title span { color: var(--gold); }
-
-  .cta-sub {
-    color: var(--text-dim);
-    font-size: 1rem;
-    margin-bottom: 48px;
-  }
-
-  /* === CONTACT CARDS === */
-  .contact-grid {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 40px;
-  }
-
-  .contact-card {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 18px 28px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    text-decoration: none;
-    color: var(--text);
-    font-size: 0.92rem;
-    transition: all 0.3s;
-    cursor: pointer;
-  }
-
-  .contact-card:hover {
-    border-color: var(--gold);
-    background: rgba(240,165,0,0.08);
-    transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(240,165,0,0.1);
-  }
-
-  .contact-icon {
-    font-size: 1.4rem;
-    flex-shrink: 0;
-  }
-
-  .contact-label {
-    font-size: 0.65rem;
-    font-family: 'Space Mono', monospace;
-    color: var(--text-dim);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 2px;
-  }
-
-  .contact-value {
-    font-weight: 500;
-    font-size: 0.9rem;
-  }
-
-  /* === MAIN CTA BUTTON === */
-  .btn-main {
-    display: inline-block;
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    letter-spacing: 0.05em;
-    padding: 18px 48px;
-    background: var(--gold);
-    color: #08090d;
-    border-radius: 100px;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 0 0 0 rgba(240,165,0,0.4);
-    animation: glowpulse 3s ease-in-out infinite;
-  }
-
-  .btn-main:hover {
-    transform: scale(1.04);
-    box-shadow: 0 8px 40px rgba(240,165,0,0.35);
-    animation: none;
-  }
-
-  @keyframes glowpulse {
-    0%,100% { box-shadow: 0 0 0 0 rgba(240,165,0,0.35); }
-    50%      { box-shadow: 0 0 30px 6px rgba(240,165,0,0.15); }
-  }
-
-  .btn-main::after {
-    content: '';
-    position: absolute;
-    top: -50%; left: -60%;
-    width: 50%; height: 200%;
-    background: rgba(255,255,255,0.25);
-    transform: skewX(-20deg);
-    transition: left 0.5s;
-    pointer-events: none;
-  }
-  .btn-main:hover::after { left: 130%; }
-
-  /* === MARQUEE === */
-  .marquee-wrap {
-    overflow: hidden;
-    padding: 24px 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    background: var(--bg2);
-    margin: 40px 0;
-  }
-
-  .marquee-inner {
-    display: flex;
-    gap: 48px;
-    animation: marquee 20s linear infinite;
-    white-space: nowrap;
-    width: max-content;
-  }
-
-  .marquee-item {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  .marquee-item::before {
-    content: '◆';
-    color: var(--gold);
-    font-size: 0.5rem;
-  }
-
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
-
-  /* === FOOTER === */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 32px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    font-size: 0.75rem;
-    color: var(--text-dim);
-    font-family: 'Space Mono', monospace;
-  }
-
-  .footer-logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 0.9rem;
-    color: var(--text);
-  }
-  .footer-logo span { color: var(--gold); }
-
-  /* === ANIMATIONS === */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(32px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: none;
-  }
-
-  /* === SCROLLBAR === */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
-
-  /* === TOAST === */
-  .toast {
-    position: fixed;
-    bottom: 32px;
-    left: 50%;
-    transform: translateX(-50%) translateY(80px);
-    background: var(--surface);
-    border: 1px solid var(--gold);
-    color: var(--text);
-    padding: 14px 28px;
-    border-radius: 100px;
-    font-size: 0.85rem;
-    font-family: 'Space Mono', monospace;
-    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
-    z-index: 999;
-  }
-  .toast.show { transform: translateX(-50%) translateY(0); }
-
-  @media (max-width: 600px) {
-    nav { padding: 14px 20px; }
-    .hero { padding: 120px 0 60px; }
-    .stats-row { flex-direction: column; }
-    .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
-    .stat-item:last-child { border-bottom: none; }
-    footer { flex-direction: column; text-align: center; }
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UltimateSolution.pw - Premium Domain Investment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0a0a15;
+            --secondary: #1a1a2e;
+            --accent-cyan: #00d4ff;
+            --accent-purple: #7c3aed;
+            --accent-pink: #ff006e;
+            --accent-lime: #00ff88;
+            --accent-gold: #ffd700;
+            --text-main: #f0f0f5;
+            --text-light: #a8a8b8;
+            --text-dark: #7a7a8e;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a15;
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="none" stroke="%2300d4ff" stroke-width="2"/><circle cx="10" cy="10" r="3" fill="%2300d4ff"/></svg>') 10 10, auto;
+        }
+
+        /* Animated Background with Particles */
+        .bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        .gradient-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 1;
+            mix-blend-mode: screen;
+        }
+
+        .blob-1 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle at 30% 30%, rgba(0, 212, 255, 0.3), transparent);
+            top: -100px;
+            right: -100px;
+            animation: blobMove1 15s infinite ease-in-out;
+        }
+
+        .blob-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle at 30% 30%, rgba(124, 58, 237, 0.25), transparent);
+            bottom: -150px;
+            left: -100px;
+            animation: blobMove2 18s infinite ease-in-out;
+        }
+
+        .blob-3 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 0, 110, 0.2), transparent);
+            top: 50%;
+            right: 5%;
+            animation: blobMove3 20s infinite ease-in-out;
+        }
+
+        @keyframes blobMove1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -50px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.95); }
+        }
+
+        @keyframes blobMove2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-40px, 40px) scale(1.05); }
+            66% { transform: translate(30px, -30px) scale(0.98); }
+        }
+
+        @keyframes blobMove3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-50px, 50px) scale(1.08); }
+            66% { transform: translate(40px, -40px) scale(0.92); }
+        }
+
+        /* Content Container */
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Navigation with Glassmorphism */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 0;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 100;
+            animation: navSlideIn 1s ease-out;
+        }
+
+        nav::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            opacity: 0.5;
+        }
+
+        @keyframes navSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            animation: iconPulse 2s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(124, 58, 237, 0.6); }
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-lime), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+            transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        nav a:hover {
+            color: var(--accent-cyan);
+        }
+
+        nav a:hover::before {
+            width: 100%;
+        }
+
+        /* Hero Section - Ultra Premium */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .hero-content {
+            animation: heroFadeIn 1.2s ease-out;
+        }
+
+        @keyframes heroFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-cyan);
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: slideInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 92px;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-purple) 25%, var(--accent-pink) 50%, var(--accent-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientFlow 4s ease infinite, slideInUp 0.8s ease-out 0.3s both;
+            letter-spacing: -2px;
+        }
+
+        @keyframes gradientFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero-domain {
+            display: inline-block;
+            margin: 40px 0;
+            animation: slideInUp 0.8s ease-out 0.4s both;
+        }
+
+        .domain-box {
+            background: rgba(0, 212, 255, 0.05);
+            border: 2px solid var(--accent-cyan);
+            border-radius: 20px;
+            padding: 30px 60px;
+            font-size: 48px;
+            font-weight: 800;
+            font-family: 'Space Mono', monospace;
+            color: var(--accent-cyan);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.2), inset 0 0 30px rgba(0, 212, 255, 0.1);
+            backdrop-filter: blur(20px);
+        }
+
+        .domain-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { left: -100%; }
+            50% { left: 100%; }
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 40px auto;
+            line-height: 1.9;
+            animation: slideInUp 0.8s ease-out 0.5s both;
+            font-weight: 300;
+        }
+
+        /* CTA Buttons - Animated */
+        .cta-buttons {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            margin-top: 50px;
+            flex-wrap: wrap;
+            animation: slideInUp 0.8s ease-out 0.6s both;
+        }
+
+        .btn {
+            padding: 18px 50px;
+            border: none;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+            z-index: 0;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            color: white;
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.6), 0 0 40px rgba(124, 58, 237, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .btn-secondary {
+            border: 2px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            background: rgba(0, 212, 255, 0.05);
+            box-shadow: inset 0 0 20px rgba(0, 212, 255, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.15);
+            box-shadow: inset 0 0 30px rgba(0, 212, 255, 0.2), 0 0 30px rgba(0, 212, 255, 0.3);
+            transform: translateY(-5px);
+        }
+
+        /* Floating scroll indicator */
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: floatDown 2s ease-in-out infinite;
+            color: var(--accent-cyan);
+            font-size: 24px;
+            opacity: 0.6;
+        }
+
+        @keyframes floatDown {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(15px); }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 150px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .section-label {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-lime);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 72px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-pink), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .section-desc {
+            font-size: 16px;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        /* Premium Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .feature-card {
+            background: rgba(26, 26, 46, 0.4);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 25px;
+            padding: 50px 40px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            group: hover;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple), var(--accent-pink));
+            animation: slideLeft 2s ease infinite;
+        }
+
+        @keyframes slideLeft {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+        }
+
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.2), transparent);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(26, 26, 46, 0.7);
+            transform: translateY(-15px);
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.2), inset 0 0 40px rgba(0, 212, 255, 0.05);
+        }
+
+        .feature-card:hover::after {
+            opacity: 1;
+        }
+
+        .feature-num {
+            position: absolute;
+            top: 25px;
+            right: 30px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 48px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0.3;
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: var(--accent-cyan);
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            line-height: 1.8;
+            font-weight: 300;
+            position: relative;
+            z-index: 1;
+            font-size: 15px;
+        }
+
+        /* Stats Section */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 80px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(124, 58, 237, 0.1));
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.1), transparent);
+            animation: statGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes statGlow {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, -20px); }
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        .stat-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 56px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-light);
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Industry Section */
+        .industry-section {
+            padding: 120px 0;
+            position: relative;
+            z-index: 2;
+            margin: 60px 0;
+        }
+
+        .industry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 25px;
+        }
+
+        .industry-tag {
+            background: rgba(0, 212, 255, 0.08);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 50px;
+            padding: 20px 30px;
+            text-align: center;
+            color: var(--accent-cyan);
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .industry-tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .industry-tag:hover {
+            background: rgba(0, 212, 255, 0.15);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .industry-tag:hover::before {
+            left: 100%;
+        }
+
+        /* Contact Section - Premium */
+        .contact-section {
+            padding: 120px 0;
+            position: relative;
+            z-index: 2;
+            margin: 100px 0;
+        }
+
+        .contact-wrapper {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(124, 58, 237, 0.08));
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 40px;
+            padding: 80px 60px;
+            backdrop-filter: blur(30px);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.1), transparent);
+            animation: contactGlow 8s ease-in-out infinite;
+        }
+
+        @keyframes contactGlow {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(50px, 50px); }
+        }
+
+        .contact-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-wrapper h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 56px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-lime));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 25px;
+        }
+
+        .contact-wrapper p {
+            font-size: 18px;
+            color: var(--text-light);
+            margin-bottom: 50px;
+            font-weight: 300;
+        }
+
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .contact-method {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 25px;
+            padding: 40px 30px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-method::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .contact-method:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 212, 255, 0.08);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        .contact-method:hover::before {
+            left: 100%;
+        }
+
+        .method-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .method-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-lime);
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .method-value {
+            font-size: 16px;
+            color: var(--text-main);
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+            word-break: break-all;
+        }
+
+        .cta-buttons-contact {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid rgba(0, 212, 255, 0.1);
+            padding: 50px 0;
+            color: var(--text-dark);
+            text-align: center;
+            font-size: 13px;
+            position: relative;
+            z-index: 2;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        .footer-accent {
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 25px;
+            }
+
+            nav .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .domain-box {
+                font-size: 28px;
+                padding: 20px 30px;
+            }
+
+            .section-title {
+                font-size: 42px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-wrapper {
+                padding: 50px 30px;
+            }
+
+            .contact-wrapper h2 {
+                font-size: 36px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Smooth Scroll */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-cyan);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-purple);
+        }
+    </style>
 </head>
 <body>
-
-<!-- Background effects -->
-<div class="bg-grid"></div>
-<div class="bg-orb orb1"></div>
-<div class="bg-orb orb2"></div>
-<div class="bg-orb orb3"></div>
-
-<!-- NAV -->
-<nav>
-  <div class="nav-logo"><span>NFT</span>Bazaar.pw</div>
-  <div class="nav-badge">🔴 FOR SALE</div>
-</nav>
-
-<!-- HERO -->
-<div class="wrapper">
-  <div class="hero">
-    <div class="hero-tag">Premium Web3 Domain · Instant Transfer</div>
-    <div class="hero-domain">
-      <span class="nft">NFT</span><span class="baz">Bazaar</span><span class="tld">.pw</span>
-    </div>
-    <p class="hero-sub">
-      A <strong>short, brandable, globally recognized domain</strong> built for the next generation
-      of NFT marketplaces, crypto trading platforms &amp; Web3 commerce.
-    </p>
-    <div class="price-strip">
-      <div class="price-card featured">
-        <div class="pc-label">Best Value</div>
-        <div class="pc-price">$4,000</div>
-        <div class="pc-note">Fixed asking price</div>
-      </div>
-      <div class="price-card">
-        <div class="pc-label">Niche Match</div>
-        <div class="pc-price">Negotiable</div>
-        <div class="pc-note">Right buyer wins</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MARQUEE -->
-<div class="marquee-wrap">
-  <div class="marquee-inner">
-    <div class="marquee-item">NFT Marketplace</div>
-    <div class="marquee-item">Web3 Commerce</div>
-    <div class="marquee-item">Crypto Trading</div>
-    <div class="marquee-item">Digital Assets</div>
-    <div class="marquee-item">Blockchain Platform</div>
-    <div class="marquee-item">DeFi Exchange</div>
-    <div class="marquee-item">Token Marketplace</div>
-    <div class="marquee-item">NFT Marketplace</div>
-    <div class="marquee-item">Web3 Commerce</div>
-    <div class="marquee-item">Crypto Trading</div>
-    <div class="marquee-item">Digital Assets</div>
-    <div class="marquee-item">Blockchain Platform</div>
-    <div class="marquee-item">DeFi Exchange</div>
-    <div class="marquee-item">Token Marketplace</div>
-  </div>
-</div>
-
-<!-- WHY THIS DOMAIN -->
-<div class="wrapper">
-  <section>
-    <div class="reveal">
-      <div class="section-label">// Domain Value</div>
-      <h2>Why NFTBazaar?</h2>
-      <p style="color:var(--text-dim);max-width:520px;line-height:1.75;font-size:0.95rem;">
-        Two high-intent keywords fused into one unforgettable brand. Instantly communicates
-        its purpose to any Web3 audience worldwide.
-      </p>
-    </div>
-    <div class="feature-grid">
-      <div class="feat-card reveal">
-        <span class="feat-icon">⚡</span>
-        <div class="feat-title">High-Intent Keywords</div>
-        <div class="feat-desc">"NFT" + "Bazaar" are globally recognized terms in the crypto and digital collectibles space — zero explanation needed.</div>
-      </div>
-      <div class="feat-card reveal">
-        <span class="feat-icon">🌏</span>
-        <div class="feat-title">Global & South Asia Appeal</div>
-        <div class="feat-desc">"Bazaar" resonates deeply across South Asia, Middle East, and international markets — a universal commerce word.</div>
-      </div>
-      <div class="feat-card reveal">
-        <span class="feat-icon">🔤</span>
-        <div class="feat-title">Short & Brandable</div>
-        <div class="feat-desc">10 characters. Easy to spell, easy to remember, easy to build a brand around. No hyphens, no numbers.</div>
-      </div>
-      <div class="feat-card reveal">
-        <span class="feat-icon">🚀</span>
-        <div class="feat-title">Ready to Deploy</div>
-        <div class="feat-desc">Instant transfer upon payment. No waiting, no paperwork. Get your marketplace live faster.</div>
-      </div>
-      <div class="feat-card reveal">
-        <span class="feat-icon">🔗</span>
-        <div class="feat-title">Web3 Native</div>
-        <div class="feat-desc">Built for blockchain-first platforms, NFT trading apps, digital art galleries, and crypto collectible markets.</div>
-      </div>
-      <div class="feat-card reveal">
-        <span class="feat-icon">🏷️</span>
-        <div class="feat-title">Flexible Pricing</div>
-        <div class="feat-desc">Priced to sell. Open to serious offers. Right buyer gets a premium brand at a fraction of a .com equivalent.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- STATS -->
-  <div class="stats-row reveal">
-    <div class="stat-item">
-      <span class="stat-num">10</span>
-      <span class="stat-txt">Characters long</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num">2</span>
-      <span class="stat-txt">Power keywords</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num">0</span>
-      <span class="stat-txt">Hyphens / Numbers</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num">∞</span>
-      <span class="stat-txt">Branding potential</span>
-    </div>
-  </div>
-
-  <!-- USE CASES -->
-  <section>
-    <div class="reveal">
-      <div class="section-label">// Ideal For</div>
-      <h2>Perfect Use Cases</h2>
-    </div>
-    <div class="use-list">
-      <div class="use-item reveal">
-        <div class="use-num">01</div>
-        <div class="use-text">NFT Marketplace Platform <span>Launch your own OpenSea-style trading platform</span></div>
-      </div>
-      <div class="use-item reveal">
-        <div class="use-num">02</div>
-        <div class="use-text">Crypto Startup / DeFi Project <span>Get an instantly recognizable Web3 brand identity</span></div>
-      </div>
-      <div class="use-item reveal">
-        <div class="use-num">03</div>
-        <div class="use-text">Digital Art Gallery or Creator Hub <span>Home for artists to sell tokenized digital artworks</span></div>
-      </div>
-      <div class="use-item reveal">
-        <div class="use-num">04</div>
-        <div class="use-text">Web3 Agency or Consultancy <span>Establish authority in the blockchain services market</span></div>
-      </div>
-      <div class="use-item reveal">
-        <div class="use-num">05</div>
-        <div class="use-text">Blockchain Incubator or Launchpad <span>Platform for launching new NFT and token projects</span></div>
-      </div>
-    </div>
-  </section>
-</div>
-
-<div class="divider"></div>
-
-<!-- CTA SECTION -->
-<div class="wrapper">
-  <div class="cta-section">
-    <div class="section-label reveal">// Make Your Move</div>
-    <h2 class="cta-title reveal">Ready to Own<br><span>NFTBazaar.pw?</span></h2>
-    <p class="cta-sub reveal">Reach out directly. All serious offers considered. Fast, secure transfer.</p>
-
-    <div class="contact-grid reveal">
-      <a class="contact-card" href="mailto:kazifaisal41@hotmail.co.uk">
-        <div class="contact-icon">✉️</div>
-        <div>
-          <div class="contact-label">Email</div>
-          <div class="contact-value">kazifaisal41@hotmail.co.uk</div>
-        </div>
-      </a>
-      <a class="contact-card" href="https://wa.me/8801724499784" target="_blank" rel="noopener">
-        <div class="contact-icon">💬</div>
-        <div>
-          <div class="contact-label">WhatsApp</div>
-          <div class="contact-value">+880 1724 499784</div>
-        </div>
-      </a>
+    <!-- Animated Background -->
+    <div class="bg-canvas">
+        <div class="gradient-blob blob-1"></div>
+        <div class="gradient-blob blob-2"></div>
+        <div class="gradient-blob blob-3"></div>
     </div>
 
-    <a class="btn-main" href="mailto:kazifaisal41@hotmail.co.uk?subject=Offer%20for%20NFTBazaar.pw&body=Hello%2C%20I%20am%20interested%20in%20purchasing%20NFTBazaar.pw.%20My%20offer%20is%3A">
-      📩 &nbsp; Make an Offer Now
-    </a>
+    <div class="container">
+        <!-- Navigation -->
+        <nav>
+            <div class="logo-wrapper">
+                <div class="logo-icon">⚡</div>
+                <div class="logo-text">UltimateSolution</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#industries">Use Cases</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
 
-    <p style="margin-top:24px;font-size:0.75rem;color:var(--text-dim);font-family:'Space Mono',monospace;">
-      Secure transfer via Sedo · Dan.com · Escrow.com · or direct
-    </p>
-  </div>
-</div>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-subtitle">Premium Domain Investment</div>
+                <h1>Own the Ultimate Solution</h1>
+                <div class="hero-domain">
+                    <div class="domain-box">UltimateSolution.pw</div>
+                </div>
+                <p>A powerfully unique domain that positions your vision at the forefront of industry. Premium, memorable, and ready to launch your empire into the stratosphere.</p>
+                
+                <div class="cta-buttons">
+                    <button class="btn btn-primary" onclick="scrollTo('contact')">🚀 Claim Ownership</button>
+                    <button class="btn btn-secondary" onclick="scrollTo('features')">✨ Explore Value</button>
+                </div>
+            </div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo"><span>NFT</span>Bazaar.pw</div>
-  <div>Premium Web3 Domain · All Rights Reserved</div>
-  <div>© 2025 · Kazi Faisal</div>
-</footer>
+            <div class="scroll-down">↓</div>
+        </section>
+    </div>
 
-<!-- TOAST -->
-<div class="toast" id="toast">📋 Copied to clipboard!</div>
+    <div class="container">
+        <!-- Features Section -->
+        <section class="features-section" id="features">
+            <div class="section-header">
+                <div class="section-label">Why Choose This Domain</div>
+                <h2 class="section-title">Unmatched Advantages</h2>
+                <p class="section-desc">Every element is designed to elevate your brand and maximize your potential for success</p>
+            </div>
 
-<script>
-  // Reveal on scroll
-  const reveals = document.querySelectorAll('.reveal');
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 80);
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12 });
-  reveals.forEach(r => obs.observe(r));
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-num">01</div>
+                    <span class="feature-icon">🎯</span>
+                    <h3>Crystal Clear Identity</h3>
+                    <p>Instantly communicates authority and comprehensive solutions. Your brand message is crystal clear from the first impression.</p>
+                </div>
 
-  // Copy on contact card click
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2500);
-  }
+                <div class="feature-card">
+                    <div class="feature-num">02</div>
+                    <span class="feature-icon">🔥</span>
+                    <h3>Premium Memorability</h3>
+                    <p>Designed to stick in minds. Your customers will remember you effortlessly, driving powerful organic growth through word-of-mouth.</p>
+                </div>
 
-  document.querySelectorAll('.contact-card').forEach(card => {
-    card.addEventListener('click', (e) => {
-      const val = card.querySelector('.contact-value').textContent;
-      navigator.clipboard?.writeText(val).then(() => {
-        showToast('📋 ' + val + ' copied!');
-      }).catch(() => {});
-    });
-  });
+                <div class="feature-card">
+                    <div class="feature-num">03</div>
+                    <span class="feature-icon">🎨</span>
+                    <h3>SEO Powerhouse</h3>
+                    <p>Built-in keywords that rank naturally. "Solution" is a high-intent term that dominates search results and captures quality traffic.</p>
+                </div>
 
-  // Stagger feat cards
-  document.querySelectorAll('.feat-card').forEach((c, i) => {
-    c.style.transitionDelay = (i * 0.07) + 's';
-  });
-</script>
+                <div class="feature-card">
+                    <div class="feature-num">04</div>
+                    <span class="feature-icon">💎</span>
+                    <h3>Enterprise Grade</h3>
+                    <p>Perfect for corporations seeking dominance. This domain screams professionalism and commands respect from day one.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-num">05</div>
+                    <span class="feature-icon">⭐</span>
+                    <h3>.PW Extension Magic</h3>
+                    <p>Stand out from the .com crowd. Exclusive, modern, and coveted by tech-forward innovators worldwide.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-num">06</div>
+                    <span class="feature-icon">🚀</span>
+                    <h3>Infinite Scalability</h3>
+                    <p>Works for startups, scale-ups, and enterprises. Your domain grows alongside your ambitions without limitations.</p>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Ready to Transfer</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1/1</div>
+                    <div class="stat-label">Unique & Original</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Business Potential</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">⚡</div>
+                    <div class="stat-label">Instant Authority</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Industry Use Cases -->
+        <section class="industry-section" id="industries">
+            <div class="section-header">
+                <div class="section-label">Perfect For</div>
+                <h2 class="section-title">Infinite Industries</h2>
+                <p class="section-desc">Adaptable across virtually every sector that demands excellence</p>
+            </div>
+
+            <div class="industry-grid">
+                <div class="industry-tag">SaaS Platforms</div>
+                <div class="industry-tag">Tech Startups</div>
+                <div class="industry-tag">AI Solutions</div>
+                <div class="industry-tag">Cloud Services</div>
+                <div class="industry-tag">Digital Marketing</div>
+                <div class="industry-tag">Management Consulting</div>
+                <div class="industry-tag">Enterprise Software</div>
+                <div class="industry-tag">IT Support</div>
+                <div class="industry-tag">E-Commerce</div>
+                <div class="industry-tag">Web Development</div>
+                <div class="industry-tag">Business Intelligence</div>
+                <div class="industry-tag">Fintech Solutions</div>
+                <div class="industry-tag">Health Tech</div>
+                <div class="industry-tag">Education Tech</div>
+                <div class="industry-tag">Custom Agencies</div>
+                <div class="industry-tag">Automation Tools</div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section" id="contact">
+            <div class="contact-wrapper">
+                <div class="contact-content">
+                    <h2>Ready to Own Your Future?</h2>
+                    <p>Take control of your destiny with a domain that matches your ambition. Let's make it official.</p>
+
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <span class="method-icon">✉️</span>
+                            <span class="method-label">Email</span>
+                            <div class="method-value">
+                                <a href="mailto:kazifaisal41@hotmail.co.uk" style="color: var(--accent-cyan); text-decoration: none;">kazifaisal41@hotmail.co.uk</a>
+                            </div>
+                        </div>
+
+                        <div class="contact-method">
+                            <span class="method-icon">📱</span>
+                            <span class="method-label">Mobile</span>
+                            <div class="method-value">
+                                <a href="tel:01724499784" style="color: var(--accent-lime); text-decoration: none;">01724499784</a>
+                            </div>
+                        </div>
+
+                        <div class="contact-method">
+                            <span class="method-icon">💬</span>
+                            <span class="method-label">WhatsApp</span>
+                            <div class="method-value">
+                                <a href="https://wa.me/441724499784" target="_blank" style="color: var(--accent-pink); text-decoration: none;">Direct Message</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cta-buttons-contact">
+                        <button class="btn btn-primary" onclick="makeOffer()">💰 Make an Offer</button>
+                        <button class="btn btn-secondary" onclick="requestInfo()">📧 Request Information</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p><span class="footer-accent">⚡ UltimateSolution.pw</span> — Premium Domain Investment</p>
+        <p>© 2024 All Rights Reserved | <span class="footer-accent">Kazi Faisal</span></p>
+        <p>Empowering Visionaries with Premium Digital Assets</p>
+    </footer>
+
+    <script>
+        // Particle Animation
+        function createParticles() {
+            const canvas = document.querySelector('.bg-canvas');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animation = `float-particle ${3 + Math.random() * 4}s ease-in-out infinite`;
+                particle.style.animationDelay = Math.random() * 2 + 's';
+                canvas.appendChild(particle);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes float-particle {
+                0%, 100% { transform: translate(0, 0); opacity: 0; }
+                50% { opacity: 0.5; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        createParticles();
+
+        // Smooth Scroll Function
+        function scrollTo(section) {
+            const element = document.getElementById(section);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Interactive Actions
+        function makeOffer() {
+            const email = 'kazifaisal41@hotmail.co.uk';
+            const subject = encodeURIComponent('Domain Purchase Inquiry - UltimateSolution.pw');
+            const body = encodeURIComponent('Hi,\n\nI am interested in purchasing the UltimateSolution.pw domain. Please provide pricing and transfer details.\n\nThank you!');
+            window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+        }
+
+        function requestInfo() {
+            const phone = '01724499784';
+            alert(`Contact Kazi Faisal:\n\n📧 Email: kazifaisal41@hotmail.co.uk\n📱 Phone: ${phone}\n\nReply to this message or call directly!`);
+        }
+
+        // Scroll Animation Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'slideInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .stat-card, .industry-tag').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            observer.observe(el);
+        });
+
+        // Mouse Follow Effect
+        document.addEventListener('mousemove', (e) => {
+            const blobs = document.querySelectorAll('.gradient-blob');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            blobs.forEach((blob, index) => {
+                blob.style.transform = `translate(${x * 20 * (index + 1)}px, ${y * 20 * (index + 1)}px)`;
+            });
+        });
+    </script>
 </body>
 </html>
